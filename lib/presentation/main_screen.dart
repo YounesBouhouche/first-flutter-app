@@ -1,6 +1,7 @@
-import 'package:first_flutter_app/presentation/pages/home.dart';
-import 'package:first_flutter_app/presentation/pages/profile.dart';
-import 'package:first_flutter_app/presentation/pages/settings.dart';
+import 'package:first_flutter_app/l10n/app_localizations.dart';
+import 'package:first_flutter_app/presentation/pages/home/home.dart';
+import 'package:first_flutter_app/presentation/pages/profile/profile.dart';
+import 'package:first_flutter_app/presentation/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             _buildNavigator(0, const HomePage()),
             _buildNavigator(1, const Profile()),
-            _buildNavigator(2, Settings()),
+            _buildNavigator(2, SettingsPage()),
           ],
         ),
         bottomNavigationBar: NavigationBar(
@@ -58,12 +59,18 @@ class _MainScreenState extends State<MainScreen> {
           onDestinationSelected: (index) {
             setState(() => _currentIndex = index);
           },
-          destinations: const <Widget>[
-            NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-            NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
+          destinations: <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: AppLocalizations.of(context)!.home,
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person),
+              label: AppLocalizations.of(context)!.profile,
+            ),
             NavigationDestination(
               icon: Icon(Icons.settings),
-              label: "Settings",
+              label: AppLocalizations.of(context)!.settings,
             ),
           ],
         ),

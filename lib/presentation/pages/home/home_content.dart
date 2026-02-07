@@ -1,67 +1,53 @@
-import 'package:first_flutter_app/hive_functions.dart';
+import 'package:first_flutter_app/l10n/app_localizations.dart';
 import 'package:first_flutter_app/presentation/todo.dart';
 import 'package:first_flutter_app/presentation/util/add_todo_dialog.dart';
 import 'package:first_flutter_app/presentation/util/todo_tile.dart';
+import 'package:first_flutter_app/todo_repository.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeContent extends StatefulWidget {
+  final List<Todo> todos;
+  const HomeContent({super.key, required this.todos});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeContent> createState() => _HomeContentState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List<Todo> todos = [];
+class _HomeContentState extends State<HomeContent> {
   bool ascending = true;
+
   List<Todo> get sortedTodos {
     if (ascending) {
-      return List.from(todos);
+      return List.from(widget.todos);
     } else {
-      return todos.reversed.toList();
+      return widget.todos.reversed.toList();
     }
   }
 
-  void getTodos() {
-    setState(() {
-      todos = HiveFunctions.getTodos();
-    });
-  }
-
   void addTodo(String title) {
-    HiveFunctions.createTodo(Todo(id: 0, title: title, isDone: false));
-    getTodos();
+    TodoRepository.createTodo(Todo(id: 0, title: title, isDone: false));
   }
 
   void deleteTodo(int index) {
-    HiveFunctions.delete(todos[index].id);
-    getTodos();
+    TodoRepository.delete(widget.todos[index].id);
   }
 
   void updateTodo(int index, String title) {
-    final todo = todos[index];
-    HiveFunctions.update(todo.id, todo.copyWith(title: title));
-    getTodos();
+    final todo = widget.todos[index];
+    TodoRepository.update(todo.id, todo.copyWith(title: title));
   }
 
   void setDone(int index, bool? done) {
     if (done == null) return;
-    final todo = todos[index];
-    HiveFunctions.update(todo.id, todo.copyWith(isDone: done));
-    getTodos();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTodos();
+    final todo = widget.todos[index];
+    TodoRepository.update(todo.id, todo.copyWith(isDone: done));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Todo List"),
+        title: Text(AppLocalizations.of(context)!.todo_list),
         actions: [
           IconButton(
             icon: Icon(ascending ? Icons.arrow_upward : Icons.arrow_downward),
@@ -78,6 +64,7 @@ class _HomePageState extends State<HomePage> {
           showDialog(
             context: context,
             builder: (context) => AddTodoDialog(
+              title: AppLocalizations.of(context)!.add_todo,
               onConfirm: addTodo,
               onCancel: Navigator.of(context).pop,
             ),
@@ -90,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         initialItemCount: sortedTodos.length,
         itemBuilder: (context, index, animation) {
           final todo = sortedTodos[index];
-          final realIndex = todos.indexOf(todo);
+          final realIndex = widget.todos.indexOf(todo);
           return SizeTransition(
             sizeFactor: animation,
             child: TodoTile(
@@ -100,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                 showDialog(
                   context: context,
                   builder: (context) => AddTodoDialog(
-                    title: "Edit Todo",
+                    title: AppLocalizations.of(context)!.edit_todo,
                     initialValue: todo.title,
                     onConfirm: (text) => updateTodo(realIndex, text),
                     onCancel: Navigator.of(context).pop,

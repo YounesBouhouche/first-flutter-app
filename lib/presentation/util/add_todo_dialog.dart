@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AddTodoDialog extends StatefulWidget {
@@ -6,7 +7,7 @@ class AddTodoDialog extends StatefulWidget {
   final Function(String title) onConfirm;
   final Function() onCancel;
   const AddTodoDialog({
-    this.title = "Add Todo",
+    required this.title,
     this.initialValue = "",
     required this.onConfirm,
     required this.onCancel,
@@ -18,16 +19,20 @@ class AddTodoDialog extends StatefulWidget {
 }
 
 class _AddTodoDialogState extends State<AddTodoDialog> {
+  String? error;
+
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController(text: widget.initialValue);
-    String? error;
 
     return AlertDialog(
       title: Text(widget.title, textAlign: TextAlign.center),
       contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 40),
       actions: [
-        OutlinedButton(onPressed: widget.onCancel, child: const Text("Cancel")),
+        OutlinedButton(
+          onPressed: widget.onCancel,
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
         FilledButton(
           onPressed: () {
             if (controller.text.isNotEmpty) {
@@ -35,23 +40,21 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
               Navigator.of(context).pop();
             } else {
               setState(() {
-                error = "Title can't be empty";
+                error = AppLocalizations.of(context)!.title_cant_be_empty;
               });
             }
           },
-          child: const Text("Add Todo"),
+          child: Text(AppLocalizations.of(context)!.save),
         ),
       ],
-      actionsAlignment: MainAxisAlignment.spaceBetween,
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        spacing: 2.0,
         children: [
           TextField(
             controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: "Enter Todo Title",
+              labelText: AppLocalizations.of(context)!.title,
               errorText: error,
             ),
           ),

@@ -1,11 +1,16 @@
 import 'package:first_flutter_app/hive_box_const.dart';
 import 'package:first_flutter_app/presentation/todo.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:rxdart/rxdart.dart';
 
-class HiveFunctions {
+class TodoRepository {
   static final todoBox = Hive.box(todoHiveBox);
 
   static Future init() => Hive.openBox(todoHiveBox);
+
+  static Future close() => Hive.close();
+
+  static Stream<List<Todo>> get todoStream => todoBox.watch().map((_) => getTodos()).startWith(getTodos());
 
   static void createTodo(Todo data) async {
     int key = await todoBox.add(data);
