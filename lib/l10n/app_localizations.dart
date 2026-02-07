@@ -154,6 +154,54 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
+  /// No description provided for @todo_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Todo not found'**
+  String get todo_not_found;
+
+  /// No description provided for @mark_as_done.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Done'**
+  String get mark_as_done;
+
+  /// No description provided for @mark_as_undone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Undone'**
+  String get mark_as_undone;
+
+  /// No description provided for @id_param.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: {id}'**
+  String id_param(Object id);
+
+  /// No description provided for @title_param.
+  ///
+  /// In en, this message translates to:
+  /// **'Title: {title}'**
+  String title_param(Object title);
+
+  /// No description provided for @status_param.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String status_param(Object status);
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @undone.
+  ///
+  /// In en, this message translates to:
+  /// **'Undone'**
+  String get undone;
+
   /// No description provided for @profile.
   ///
   /// In en, this message translates to:

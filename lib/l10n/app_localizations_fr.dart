@@ -36,6 +36,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get save => 'Enregistrer';
 
   @override
+  String get todo_not_found => 'Tâche non trouvée';
+
+  @override
+  String get mark_as_done => 'Marquer comme terminée';
+
+  @override
+  String get mark_as_undone => 'Marquer comme non terminée';
+
+  @override
+  String id_param(Object id) {
+    return 'ID : $id';
+  }
+
+  @override
+  String title_param(Object title) {
+    return 'Titre : $title';
+  }
+
+  @override
+  String status_param(Object status) {
+    return 'Statut : $status';
+  }
+
+  @override
+  String get done => 'Terminée';
+
+  @override
+  String get undone => 'Non terminée';
+
+  @override
   String get profile => 'Profil';
 
   @override
@@ -61,7 +91,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get dynamic_colors_description =>
-      'Utilisez des couleurs dynamiques sur les appareils compatibles';
+      'Utiliser des couleurs dynamiques sur les appareils compatibles';
 
   @override
   String get language => 'Langue';

@@ -36,6 +36,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save => 'Save';
 
   @override
+  String get todo_not_found => 'Todo not found';
+
+  @override
+  String get mark_as_done => 'Mark as Done';
+
+  @override
+  String get mark_as_undone => 'Mark as Undone';
+
+  @override
+  String id_param(Object id) {
+    return 'ID: $id';
+  }
+
+  @override
+  String title_param(Object title) {
+    return 'Title: $title';
+  }
+
+  @override
+  String status_param(Object status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get undone => 'Undone';
+
+  @override
   String get profile => 'Profile';
 
   @override

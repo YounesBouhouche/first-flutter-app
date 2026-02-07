@@ -83,32 +83,31 @@ class _HomeContentState extends State<HomeContent> {
         itemBuilder: (context, index, animation) {
           final todo = sortedTodos[index];
           final realIndex = widget.todos.indexOf(todo);
-          return Column(
+          return Container(
             key: ValueKey(todo.id),
-            children: [
-              SizeTransition(
-                sizeFactor: animation,
-                child: TodoTile(
-                  title: todo.title,
-                  isDone: todo.isDone,
-                  shape: listTileShape(index, sortedTodos.length),
-                  onEdit: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AddTodoDialog(
-                        title: AppLocalizations.of(context)!.edit_todo,
-                        initialValue: todo.title,
-                        onConfirm: (text) => updateTodo(realIndex, text),
-                        onCancel: Navigator.of(context).pop,
-                      ),
-                    );
-                  },
-                  onDelete: () => deleteTodo(realIndex),
-                  onChangedDone: (done) => setDone(realIndex, done),
-                ),
+            margin: const EdgeInsets.only(bottom: 6.0),
+            child: SizeTransition(
+              sizeFactor: animation,
+              child: TodoTile(
+                id: todo.id,
+                title: todo.title,
+                isDone: todo.isDone,
+                shape: listTileShape(index, sortedTodos.length),
+                onEdit: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AddTodoDialog(
+                      title: AppLocalizations.of(context)!.edit_todo,
+                      initialValue: todo.title,
+                      onConfirm: (text) => updateTodo(realIndex, text),
+                      onCancel: Navigator.of(context).pop,
+                    ),
+                  );
+                },
+                onDelete: () => deleteTodo(realIndex),
+                onChangedDone: (done) => setDone(realIndex, done),
               ),
-              if (index < sortedTodos.length - 1) const SizedBox(height: 6),
-            ],
+            ),
           );
         },
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TodoTile extends StatelessWidget {
+  final int id;
   final String title;
   final bool isDone;
   final Function()? onEdit;
@@ -10,6 +12,7 @@ class TodoTile extends StatelessWidget {
 
   const TodoTile({
     super.key,
+    required this.id,
     required this.title,
     required this.isDone,
     this.onEdit,
@@ -49,7 +52,9 @@ class TodoTile extends StatelessWidget {
           ),
         ),
         contentPadding: const EdgeInsets.all(8.0),
-        onTap: onEdit,
+        onLongPress: onEdit,
+        onTap: () =>
+            context.pushNamed("todo", pathParameters: {"id": id.toString()}),
       ),
     );
   }

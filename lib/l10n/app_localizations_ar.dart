@@ -36,6 +36,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get save => 'حفظ';
 
   @override
+  String get todo_not_found => 'المهمة غير موجودة';
+
+  @override
+  String get mark_as_done => 'وضع علامة كمكتملة';
+
+  @override
+  String get mark_as_undone => 'وضع علامة كغير مكتملة';
+
+  @override
+  String id_param(Object id) {
+    return 'المعرف: $id';
+  }
+
+  @override
+  String title_param(Object title) {
+    return 'العنوان: $title';
+  }
+
+  @override
+  String status_param(Object status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String get done => 'مكتملة';
+
+  @override
+  String get undone => 'غير مكتملة';
+
+  @override
   String get profile => 'الملف الشخصي';
 
   @override
@@ -61,7 +91,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dynamic_colors_description =>
-      'استخدم ألوانًا ديناميكية على الأجهزة المدعومة';
+      'استخدم الألوان الديناميكية على الأجهزة المدعومة';
 
   @override
   String get language => 'اللغة';

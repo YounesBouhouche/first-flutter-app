@@ -10,7 +10,8 @@ class TodoRepository {
 
   static Future close() => Hive.close();
 
-  static Stream<List<Todo>> get todoStream => todoBox.watch().map((_) => getTodos()).startWith(getTodos());
+  static Stream<List<Todo>> get todoStream =>
+      todoBox.watch().map((_) => getTodos()).startWith(getTodos());
 
   static void createTodo(Todo data) async {
     int key = await todoBox.add(data);
@@ -24,6 +25,17 @@ class TodoRepository {
     }).toList();
 
     return data.reversed.toList();
+  }
+
+  static Stream<Todo>? getTodoById(int id) {
+    if (!todoBox.containsKey(id)) return null;
+    return todoBox
+        .watch(key: id)
+        .map((event) {
+          final value = todoBox.get(id);
+          return Todo(id: id, title: value.title, isDone: value.isDone);
+        })
+        .startWith(todoBox.get(id));
   }
 
   static void update(int key, Todo data) {
