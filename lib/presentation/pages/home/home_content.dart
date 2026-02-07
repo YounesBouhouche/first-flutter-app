@@ -1,6 +1,7 @@
 import 'package:first_flutter_app/l10n/app_localizations.dart';
 import 'package:first_flutter_app/presentation/todo.dart';
 import 'package:first_flutter_app/presentation/util/add_todo_dialog.dart';
+import 'package:first_flutter_app/presentation/util/list_tile_shape.dart';
 import 'package:first_flutter_app/presentation/util/todo_tile.dart';
 import 'package:first_flutter_app/todo_repository.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,14 @@ class _HomeContentState extends State<HomeContent> {
   bool ascending = true;
 
   List<Todo> get sortedTodos {
-    if (ascending) {
-      return List.from(widget.todos);
-    } else {
-      return widget.todos.reversed.toList();
-    }
+    final copy = List<Todo>.from(widget.todos);
+    final sorted = ascending ? copy : copy.reversed.toList();
+    sorted.sort((a, b) {
+      if (a.isDone == b.isDone) return 0;
+      if (a.isDone && !b.isDone) return 1;
+      return -1;
+    });
+    return sorted;
   }
 
   void addTodo(String title) {
@@ -73,30 +77,38 @@ class _HomeContentState extends State<HomeContent> {
         child: const Icon(Icons.add),
       ),
       body: AnimatedList(
+        padding: const EdgeInsets.all(12),
         key: UniqueKey(),
         initialItemCount: sortedTodos.length,
         itemBuilder: (context, index, animation) {
           final todo = sortedTodos[index];
           final realIndex = widget.todos.indexOf(todo);
-          return SizeTransition(
-            sizeFactor: animation,
-            child: TodoTile(
-              title: todo.title,
-              isDone: todo.isDone,
-              onEdit: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AddTodoDialog(
-                    title: AppLocalizations.of(context)!.edit_todo,
-                    initialValue: todo.title,
-                    onConfirm: (text) => updateTodo(realIndex, text),
-                    onCancel: Navigator.of(context).pop,
-                  ),
-                );
-              },
-              onDelete: () => deleteTodo(realIndex),
-              onChangedDone: (done) => setDone(realIndex, done),
-            ),
+          return Column(
+            key: ValueKey(todo.id),
+            children: [
+              SizeTransition(
+                sizeFactor: animation,
+                child: TodoTile(
+                  title: todo.title,
+                  isDone: todo.isDone,
+                  shape: listTileShape(index, sortedTodos.length),
+                  onEdit: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AddTodoDialog(
+                        title: AppLocalizations.of(context)!.edit_todo,
+                        initialValue: todo.title,
+                        onConfirm: (text) => updateTodo(realIndex, text),
+                        onCancel: Navigator.of(context).pop,
+                      ),
+                    );
+                  },
+                  onDelete: () => deleteTodo(realIndex),
+                  onChangedDone: (done) => setDone(realIndex, done),
+                ),
+              ),
+              if (index < sortedTodos.length - 1) const SizedBox(height: 6),
+            ],
           );
         },
       ),

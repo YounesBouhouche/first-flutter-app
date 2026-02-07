@@ -61,15 +61,18 @@ class _MainScreenState extends State<MainScreen> {
           },
           destinations: <Widget>[
             NavigationDestination(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
               label: AppLocalizations.of(context)!.home,
             ),
             NavigationDestination(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
               label: AppLocalizations.of(context)!.profile,
             ),
             NavigationDestination(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings),
               label: AppLocalizations.of(context)!.settings,
             ),
           ],

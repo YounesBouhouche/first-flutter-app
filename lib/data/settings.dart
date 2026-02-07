@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Settings extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
   bool _dynamicColors = true;
-  String? _language = null;
+  String? _language;
 
   ThemeMode get themeMode => _themeMode;
   bool get dynamicColors => _dynamicColors;

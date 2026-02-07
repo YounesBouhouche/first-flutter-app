@@ -6,6 +6,7 @@ class TodoTile extends StatelessWidget {
   final Function()? onEdit;
   final Function(bool?)? onChangedDone;
   final Function() onDelete;
+  final ShapeBorder? shape;
 
   const TodoTile({
     super.key,
@@ -14,23 +15,33 @@ class TodoTile extends StatelessWidget {
     this.onEdit,
     this.onChangedDone,
     required this.onDelete,
+    this.shape,
   });
 
   @override
   Widget build(BuildContext context) {
+    final tileShape =
+        shape ??
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0));
     return Dismissible(
       key: ValueKey(title),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) => onDelete(),
       background: Container(
-        color: Theme.of(context).colorScheme.errorContainer,
+        decoration: ShapeDecoration(
+          color: Theme.of(context).colorScheme.errorContainer,
+          shape: tileShape,
+        ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16.0),
         child: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
       ),
       child: ListTile(
         leading: Checkbox(value: isDone, onChanged: onChangedDone),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        shape: tileShape,
+        tileColor: isDone
+            ? Theme.of(context).colorScheme.primary.withAlpha(25)
+            : Theme.of(context).colorScheme.surfaceContainerLow,
         title: Text(
           title,
           style: TextStyle(

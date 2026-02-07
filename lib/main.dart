@@ -3,7 +3,6 @@ import 'package:first_flutter_app/todo_repository.dart';
 import 'package:first_flutter_app/presentation/main_screen.dart';
 import 'package:first_flutter_app/presentation/todo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:first_flutter_app/data/settings.dart';
 import 'package:provider/provider.dart';

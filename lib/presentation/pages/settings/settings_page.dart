@@ -18,30 +18,33 @@ class SettingsPage extends StatelessWidget {
         onTap: () {},
         icon: Icons.palette,
         shape: listTileShape(0, 2),
-        trailing: DropdownMenu<ThemeMode>(
-          initialSelection: settings.themeMode,
-          inputDecorationTheme: InputDecorationTheme(
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.zero,
-          ),
-          dropdownMenuEntries: [
-            DropdownMenuEntry(
+        bottom: SegmentedButton<ThemeMode>(
+          selected: <ThemeMode>{settings.themeMode},
+          segments: [
+            ButtonSegment(
               value: ThemeMode.system,
-              label: AppLocalizations.of(context)!.system,
+              label: Text(
+                AppLocalizations.of(context)!.system_default,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            DropdownMenuEntry(
+            ButtonSegment(
               value: ThemeMode.light,
-              label: AppLocalizations.of(context)!.light,
+              label: Text(
+                AppLocalizations.of(context)!.light,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            DropdownMenuEntry(
+            ButtonSegment(
               value: ThemeMode.dark,
-              label: AppLocalizations.of(context)!.dark,
+              label: Text(
+                AppLocalizations.of(context)!.dark,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
-          onSelected: (value) {
-            if (value != null) {
-              settings.updateThemeMode(value);
-            }
+          onSelectionChanged: (value) {
+            settings.updateThemeMode(value.first);
           },
         ),
       ),
