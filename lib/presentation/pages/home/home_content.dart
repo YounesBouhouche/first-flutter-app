@@ -86,27 +86,24 @@ class _HomeContentState extends State<HomeContent> {
           return Container(
             key: ValueKey(todo.id),
             margin: const EdgeInsets.only(bottom: 6.0),
-            child: SizeTransition(
-              sizeFactor: animation,
-              child: TodoTile(
-                id: todo.id,
-                title: todo.title,
-                isDone: todo.isDone,
-                shape: listTileShape(index, sortedTodos.length),
-                onEdit: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AddTodoDialog(
-                      title: AppLocalizations.of(context)!.edit_todo,
-                      initialValue: todo.title,
-                      onConfirm: (text) => updateTodo(realIndex, text),
-                      onCancel: Navigator.of(context).pop,
-                    ),
-                  );
-                },
-                onDelete: () => deleteTodo(realIndex),
-                onChangedDone: (done) => setDone(realIndex, done),
-              ),
+            child: TodoTile(
+              id: todo.id,
+              title: todo.title,
+              isDone: todo.isDone,
+              shape: listTileShape(index, sortedTodos.length),
+              onEdit: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AddTodoDialog(
+                    title: AppLocalizations.of(context)!.edit_todo,
+                    initialValue: todo.title,
+                    onConfirm: (text) => updateTodo(realIndex, text),
+                    onCancel: Navigator.of(context).pop,
+                  ),
+                );
+              },
+              onDelete: () => deleteTodo(realIndex),
+              onChangedDone: (done) => setDone(realIndex, done),
             ),
           );
         },

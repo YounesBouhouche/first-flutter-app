@@ -41,7 +41,7 @@ class TodoPage extends StatelessWidget {
           final todo = snapshot.data!;
           return Scaffold(
             appBar: AppBar(
-              title: Text(todo.title),
+              title: Hero(tag: 'todo_$id', child: Text(todo.title)),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => context.pop(),

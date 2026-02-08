@@ -45,10 +45,18 @@ class TodoTile extends StatelessWidget {
         tileColor: isDone
             ? Theme.of(context).colorScheme.primary.withAlpha(25)
             : Theme.of(context).colorScheme.surfaceContainerLow,
-        title: Text(
-          title,
-          style: TextStyle(
-            decoration: isDone ? TextDecoration.lineThrough : null,
+        title: Hero(
+          tag: 'todo_$id',
+          child: Text(
+            title,
+            style: TextStyle(
+              decoration: isDone ? TextDecoration.lineThrough : null,
+              color: isDone
+                  ? Theme.of(
+                      context,
+                    ).colorScheme.onPrimaryContainer.withAlpha(150)
+                  : null,
+            ),
           ),
         ),
         contentPadding: const EdgeInsets.all(8.0),
